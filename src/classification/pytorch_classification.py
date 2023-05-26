@@ -20,7 +20,7 @@ class Image_classification:
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         print(f"The process is running in {self.device}")
 
-    def data_transform(self, train_data_dir, test_train_dir):
+    def data_transform(self, train_data_dir, val_data_dir):
         # Transform the data
         transform_data = {
             "train": ImageFolder(root= train_data_dir,
@@ -29,7 +29,7 @@ class Image_classification:
                                     transforms.RandomHorizontalFlip(),
                                     transforms.ToTensor()])
             ),
-            "val": ImageFolder(root= test_train_dir,
+            "val": ImageFolder(root= val_data_dir,
                                     transform=transforms.Compose([
                                     transforms.Resize(640),
                                     transforms.CenterCrop(640),
@@ -114,15 +114,15 @@ class Image_classification:
                 
 
 if __name__=='__main__':
-    train_data_dir = "data/train"
-    test_train_dir = "data/test"
+    train_data_dir = "/Volumes/Projects/cv_suite/data/train"
+    val_data_dir = "/Volumes/Projects/cv_suite/data/test"
     batch_size = 4
     epochs = 10
     model = "resnet18"
     freeze_layer = True
 
     image_classification = Image_classification()
-    data_transform = image_classification.data_transform(train_data_dir, test_train_dir)
+    data_transform = image_classification.data_transform(train_data_dir, val_data_dir)
     print("Data transformed")
     data_loader = image_classification.data_loader(data_transform, batch_size)
     print("Data Loader created")
