@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning) 
 
 
-class Image_classification():
+class Image_classification:
     def __init__(self):
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         print(f"The process is running in {self.device}")
